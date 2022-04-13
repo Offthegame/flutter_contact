@@ -22,15 +22,46 @@ class MyApp extends StatelessWidget {
     // 코드 복사는 Ctrl + D
     // return Container(
     return MaterialApp(
-        home: Center(
-      //  Text('안녕')처럼 텍스트도 넣을 수 있음
-      //  Icon(Icon.아이콘이름)하면 아이콘 넣어줌(플러터 홈페이지에 있음)
-      //  네모 박스는 Container(), 이미지는 Image.asset('이미지경로')
-      //  이미지는 assets폴더 만들고 pubspec.yaml 이미지 경로 등록 필요
-      //    아래처럼 바로 CSS설정이 가능함, 단위는 LP(Logical Pixel)로 1cm에 38LP라고 함
-            child: Container(width : 50, height : 50, color: Colors.blue)
-        //        child위젯도 넣어봄
+        //기본 flutter 테마는 크게 두가지, MaterialApp과 Cupertino
+        //디자인 빼고도 기능이 많아서 사용하는게 좋음
+        // Material Design 쓰기 위해선 pubspec.yaml에 uses-material-design: true 여야 함
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('같이카 beta'),
+            centerTitle: true,
+          ),
+          body: Row(
+            // Row는 가로로, Column은 세로로 배치
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // display: flex와 유사한 기능, row에서는 가로로 column에서는 세로로 동일 간격
+            // justify-content: space-around와 같음
+            // crossAxisAlignment: CrossAxisAlignment.center,(상하 폭이 필요함)
+            // ㄴalign-items : center 느낌? (수직을 보조하는?)
+            //  Ctrl+Space누르면 자동완성 뜸, 그걸로 코드 작성
+            //  안에 넣을 함수는 왼쪽과 똑같이 쳐보는 걸로 시작
+            //  아니면 마우스 hover를 통해 함수 파악,
+            //  또는 함수 뒤에 점(.)을 찍거나 괄호()를 치거나 하면서 함수가 되는지 확인
+            //  자동 완성엔 한계가 있어서 구글링이 답 ㅠㅠ
+            children: [
+              Icon(Icons.star),
+              Icon(Icons.star),
+              Icon(Icons.star),
+            ]
+          // children : const [] 하지 않았다고 밑줄 생김
+          // analysis_options.yaml 이동해서 아래 코드 추가
+          // prefer_const_literals_to_create_immutables: false
+          ),
+          bottomNavigationBar: BottomAppBar(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(onPressed: () {}, icon: Icon(Icons.phone)),
+                IconButton(onPressed: () {}, icon: Icon(Icons.message)),
+                IconButton(onPressed: () {}, icon: Icon(Icons.contact_page)),
+            ],
+          ),
         )
+      )
     );
   }
 }
