@@ -27,18 +27,25 @@ class MyApp extends StatelessWidget {
       // Material Design 쓰기 위해선 pubspec.yaml에 uses-material-design: true 여야 함
         home: Scaffold(
             appBar: AppBar(
+              leading: IconButton(onPressed:(){},icon: Icon(Icons.menu_outlined)),
               title: const Text('같이카 beta'),
               centerTitle: true,
+              actions: [IconButton(onPressed: () {}, icon: Icon(Icons.star_border_purple500_rounded))],
+              //  title, leading: 왼쪽에 넣을 아이콘, action: 우측 아이콘
             ),
-            body: Align(
-              //Center에서 Align으로 교체, 아래 alignment활성화 함
-              alignment: Alignment.bottomLeft,
-              //아래 왼쪽에 정렬 가능
-              child: Container(
-                width: double.infinity, height: 50, color: Colors.blue,
-                //  double.infinity 값을 주면 부모 넓이를 가득 채움
-                //  레이아웃 수정 꿀팁은 widget 위에 마우스 hover > 자동완성기능 쓰는 것
-
+            body: SizedBox(
+              child: ElevatedButton(
+                  child: Text('안녕하세요',
+                    style: TextStyle( color: Colors.red),
+                  ),
+                  //  기존에 Colors.red 형식 말고 Color(0xffaaaaaa)형식, Color.fromRGBO()
+                  //  Color.fromRGBO(r, g, b, opacity) 등의 형식이 있음
+                  //  fontSize나 letterSpacing 등의 다양한 attribute가 있음
+                  //  어차피 이거 다 배워봤자 다 까먹고 검색해 쓰게 돼있음 ㅠ
+                  //  자주 쓰는 건 fontWeight : FontWeight.w700 정도?
+                  //  Icon(Icons.phone, 스타일링할 것들) 아이콘은 이런 식으로 스타일링 함
+                  //  Button 종류는 TextButton(), IconButton(), ElevatedButton()이 있음
+                  onPressed: () {}
 
               ),
             ),
