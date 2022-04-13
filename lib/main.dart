@@ -30,36 +30,35 @@ class MyApp extends StatelessWidget {
             title: const Text('같이카 beta'),
             centerTitle: true,
           ),
-          body: Row(
-            // Row는 가로로, Column은 세로로 배치
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            // display: flex와 유사한 기능, row에서는 가로로 column에서는 세로로 동일 간격
-            // justify-content: space-around와 같음
-            // crossAxisAlignment: CrossAxisAlignment.center,(상하 폭이 필요함)
-            // ㄴalign-items : center 느낌? (수직을 보조하는?)
-            //  Ctrl+Space누르면 자동완성 뜸, 그걸로 코드 작성
-            //  안에 넣을 함수는 왼쪽과 똑같이 쳐보는 걸로 시작
-            //  아니면 마우스 hover를 통해 함수 파악,
-            //  또는 함수 뒤에 점(.)을 찍거나 괄호()를 치거나 하면서 함수가 되는지 확인
-            //  자동 완성엔 한계가 있어서 구글링이 답 ㅠㅠ
-            children: [
-              Icon(Icons.star),
-              Icon(Icons.star),
-              Icon(Icons.star),
-            ]
-          // children : const [] 하지 않았다고 밑줄 생김
-          // analysis_options.yaml 이동해서 아래 코드 추가
-          // prefer_const_literals_to_create_immutables: false
+          body: Center(
+            //Container 마우스 hover해보면 wrap with Center 뜸
+            //오늘은 Container에 대해 배움
+            child: Container(
+              margin: EdgeInsets.all(30),
+              padding: EdgeInsets.fromLTRB(10, 20, 30, 40),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black)
+              ),
+
+
+            ),
           ),
           bottomNavigationBar: BottomAppBar(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(onPressed: () {}, icon: Icon(Icons.phone)),
-                IconButton(onPressed: () {}, icon: Icon(Icons.message)),
-                IconButton(onPressed: () {}, icon: Icon(Icons.contact_page)),
-            ],
+            child: SizedBox(
+              height: 70,
+              //Row 줄 높이를 주려면 Container같은 것으로 감싸야함
+              //Row위에 마우스 올리면 왼쪽에 전구가 뜸
+              //전구 눌리면 wrap with container 클릭할 수 있음
+              //하지만 Container를 남용하지 말라고 밑줄 그어짐
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(onPressed: () {}, icon: Icon(Icons.phone)),
+                  IconButton(onPressed: () {}, icon: Icon(Icons.message)),
+                  IconButton(onPressed: () {}, icon: Icon(Icons.contact_page)),
+              ],
           ),
+            ),
         )
       )
     );
