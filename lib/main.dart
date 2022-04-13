@@ -27,25 +27,36 @@ class MyApp extends StatelessWidget {
       // Material Design 쓰기 위해선 pubspec.yaml에 uses-material-design: true 여야 함
         home: Scaffold(
             appBar: AppBar(
-              leading: IconButton(onPressed:(){},icon: Icon(Icons.menu_outlined)),
-              title: const Text('같이카 beta'),
-              centerTitle: true,
+              title: const Text('당근마켓 beta'),
               actions: [IconButton(onPressed: () {}, icon: Icon(Icons.star_border_purple500_rounded))],
               //  title, leading: 왼쪽에 넣을 아이콘, action: 우측 아이콘
             ),
             body: SizedBox(
-              child: ElevatedButton(
-                  child: Text('안녕하세요',
-                    style: TextStyle( color: Colors.red),
+              width: double.infinity,
+              height: 180,
+
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(30)
+                    ),
+                    child: IconButton(
+                        onPressed: () {},
+                        iconSize: 100,
+                      
+                        icon: Image.asset('../assets/00885_2.jpg'),
+                    //    이상하다. 왜 ../해서 lib폴더를 빠져나가야 했을까;
+                    ),
                   ),
-                  //  기존에 Colors.red 형식 말고 Color(0xffaaaaaa)형식, Color.fromRGBO()
-                  //  Color.fromRGBO(r, g, b, opacity) 등의 형식이 있음
-                  //  fontSize나 letterSpacing 등의 다양한 attribute가 있음
-                  //  어차피 이거 다 배워봤자 다 까먹고 검색해 쓰게 돼있음 ㅠ
-                  //  자주 쓰는 건 fontWeight : FontWeight.w700 정도?
-                  //  Icon(Icons.phone, 스타일링할 것들) 아이콘은 이런 식으로 스타일링 함
-                  //  Button 종류는 TextButton(), IconButton(), ElevatedButton()이 있음
-                  onPressed: () {}
+                  Column(
+
+                  )
+
+
+                ],
+
 
               ),
             ),
