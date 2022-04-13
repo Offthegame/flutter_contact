@@ -22,45 +22,44 @@ class MyApp extends StatelessWidget {
     // 코드 복사는 Ctrl + D
     // return Container(
     return MaterialApp(
-        //기본 flutter 테마는 크게 두가지, MaterialApp과 Cupertino
-        //디자인 빼고도 기능이 많아서 사용하는게 좋음
-        // Material Design 쓰기 위해선 pubspec.yaml에 uses-material-design: true 여야 함
+      //기본 flutter 테마는 크게 두가지, MaterialApp과 Cupertino
+      //디자인 빼고도 기능이 많아서 사용하는게 좋음
+      // Material Design 쓰기 위해선 pubspec.yaml에 uses-material-design: true 여야 함
         home: Scaffold(
-          appBar: AppBar(
-            title: const Text('같이카 beta'),
-            centerTitle: true,
-          ),
-          body: Center(
-            //Container 마우스 hover해보면 wrap with Center 뜸
-            //오늘은 Container에 대해 배움
-            child: Container(
-              margin: EdgeInsets.all(30),
-              padding: EdgeInsets.fromLTRB(10, 20, 30, 40),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black)
+            appBar: AppBar(
+              title: const Text('같이카 beta'),
+              centerTitle: true,
+            ),
+            body: Align(
+              //Center에서 Align으로 교체, 아래 alignment활성화 함
+              alignment: Alignment.bottomLeft,
+              //아래 왼쪽에 정렬 가능
+              child: Container(
+                width: double.infinity, height: 50, color: Colors.blue,
+                //  double.infinity 값을 주면 부모 넓이를 가득 채움
+                //  레이아웃 수정 꿀팁은 widget 위에 마우스 hover > 자동완성기능 쓰는 것
+
+
               ),
-
-
             ),
-          ),
-          bottomNavigationBar: BottomAppBar(
-            child: SizedBox(
-              height: 70,
-              //Row 줄 높이를 주려면 Container같은 것으로 감싸야함
-              //Row위에 마우스 올리면 왼쪽에 전구가 뜸
-              //전구 눌리면 wrap with container 클릭할 수 있음
-              //하지만 Container를 남용하지 말라고 밑줄 그어짐
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(onPressed: () {}, icon: Icon(Icons.phone)),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.message)),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.contact_page)),
-              ],
-          ),
-            ),
+            bottomNavigationBar: BottomAppBar(
+              child: SizedBox(
+                height: 70,
+                //Row 줄 높이를 주려면 Container같은 것으로 감싸야함
+                //Row위에 마우스 올리면 왼쪽에 전구가 뜸
+                //전구 눌리면 wrap with container 클릭할 수 있음
+                //하지만 Container를 남용하지 말라고 밑줄 그어짐
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(onPressed: () {}, icon: Icon(Icons.phone)),
+                    IconButton(onPressed: () {}, icon: Icon(Icons.message)),
+                    IconButton(onPressed: () {}, icon: Icon(Icons.contact_page)),
+                  ],
+                ),
+              ),
+            )
         )
-      )
     );
   }
 }
