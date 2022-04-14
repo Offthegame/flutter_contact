@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 //void는 '아무 것도 하지 말아주세요' 인데 알 필요 없음
@@ -33,14 +34,16 @@ class MyApp extends StatelessWidget {
             ),
             body: SizedBox(
               width: double.infinity,
-              height: 180,
+              height: 200,
 
               child: Row(
                 children: [
                   Container(
+                    padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       color: Colors.blue,
-                      borderRadius: BorderRadius.circular(30)
+                      borderRadius: BorderRadius.circular(30),
+
                     ),
                     child: IconButton(
                         onPressed: () {},
@@ -51,10 +54,58 @@ class MyApp extends StatelessWidget {
                     ),
                   ),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                    Container(
+                      width: 300,
+                      padding: EdgeInsets.all(20),
+                      child: TextButton(onPressed: (){}, child: Wrap(
+                        children: [
+                          Text(
+                            '캐논 DSLR 100D (단렌즈, 충전기 16기가 SD포함)',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black),
+                          ),
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child:
+                                  Text('성동구 행당동 · 끌올 10분 전', style: TextStyle(fontSize: 12, color: Colors.grey), textAlign: TextAlign.left, ),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child:
+                                Text('210,000', style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w900), textAlign: TextAlign.left,)
+                              ),
+                            ],
+                          ),
+                        ],
+                      )),
+                    ),
+                    SizedBox(
+                      width: 320,
+                      child:
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(onPressed: (){}, icon: Icon(Icons.favorite_border)),
+                              Text('4')
 
-                  )
+                            ]
 
+                          )
 
+                    )
+                    ],
+                  ),
                 ],
 
 
