@@ -25,28 +25,90 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         home: Scaffold(
           appBar: AppBar(),
-          body: Row(
-            children: [
-              Flexible(child: Container(
-                color: Colors.green,),
-                flex: 1,),
-                //flex를 통해 1대 1로 화면을 양분, 1:2, 1:4 등으로 응용 가능
-              Flexible(child: Container(
-                color: Colors.red,
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Container(color: Colors.grey, height: 100,),
-                    Expanded(child: Container(color: Colors.deepPurple,), flex: 1,),
-                  //  Expanded는 Flexible과 달리 남은 화면 꽉 채우기 가능
-                  ],
-                ),
+          body: ProfileList(),
+        )
+    );
+  }
+}
+//stless > 자동완성 > class 생성해줌
+//class는 위젯(?함수?)로 복잡한 코드를 따로 관리해줌
+//아무 데나 만들어도 됨
+//extedns StatelessWidget는 Statele..에 있는 함수를 Class에 다 넣어준다는 의미
+class ProfileList extends StatelessWidget {
+  const ProfileList({Key? key}) : super(key: key);
+  //const와 ProfileList는 향후 배울 것
+
+  @override
+  //여기서 override는 아래 함수 중 일부를 덮어 쓴다는 말
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: EdgeInsets.all(10),
+      children: [
+        DecoratedBox(
+          decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: Color.fromRGBO(229, 229, 229, 1.0),width: 1,),
+              )
+          ),
+          child: TextButton(
+              onPressed: (){},
+              style: OutlinedButton.styleFrom(
+                padding: EdgeInsets.fromLTRB(10,20,10,24),
               ),
-                flex: 1,),
-            ]
+              child: Row(
+                children: [
+                  Icon(Icons.account_circle, size: 40, color: Colors.black,),
+                  SizedBox(width: 20,),
+                  Text('노마드곰돌', style: TextStyle(fontSize: 16, color: Colors.black)),
+                ],
+              )
 
           ),
-        )
+        ),
+        DecoratedBox(
+          decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: Color.fromRGBO(229, 229, 229, 1.0),width: 1,),
+              )
+          ),
+          child: TextButton(
+              onPressed: (){},
+              style: OutlinedButton.styleFrom(
+                padding: EdgeInsets.fromLTRB(10,20,10,24),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.account_circle, size: 40, color: Colors.black,),
+                  SizedBox(width: 20,),
+                  Text('땃쥐', style: TextStyle(fontSize: 16, color: Colors.black)),
+                ],
+              )
+
+          ),
+        ),
+        DecoratedBox(
+          decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: Color.fromRGBO(229, 229, 229, 1.0),width: 1,),
+              )
+          ),
+          child: TextButton(
+              onPressed: (){},
+              style: OutlinedButton.styleFrom(
+                padding: EdgeInsets.fromLTRB(10,20,10,24),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.account_circle, size: 40, color: Colors.black,),
+                  SizedBox(width: 20,),
+                  Text('물개', style: TextStyle(fontSize: 16, color: Colors.black)),
+                ],
+              )
+
+          ),
+        ),
+
+      ],
     );
   }
 }
