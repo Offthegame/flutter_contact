@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
               child: Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(30),
@@ -48,8 +47,7 @@ class MyApp extends StatelessWidget {
                     child: IconButton(
                         onPressed: () {},
                         iconSize: 100,
-                      
-                        icon: Image.asset('../assets/00885_2.jpg'),
+                        icon: Image.asset('../assets/00885_2.jpg', fit: BoxFit.cover,),
                     //    이상하다. 왜 ../해서 lib폴더를 빠져나가야 했을까;
                     ),
                   ),
