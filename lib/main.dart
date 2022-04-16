@@ -13,10 +13,18 @@ void main() {
 // MyApp은 메인페이지 만드는 부분
 // stless 쓰고 tab하니까 아래 class 생성됨
 // 앱 메인페이지 세팅을 위한 기본 문법, 나중에 이해 가능
-class MyApp extends StatelessWidget {
+//StatelessWidget에서 StatefulWidget으로 변경!!
+class MyApp extends StatefulWidget {
   MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   //일단 const는 지워두자
   var a = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +39,13 @@ class MyApp extends StatelessWidget {
             child: Text(a.toString()),
             //버튼을 누르면 숫자가 올라가도록 코드 작성
             onPressed: (){
-            //  버튼 누를 때마다 실행해 줄 코드 입력
-              a++;
-            //  a를 누르면 1씩 증가한다는 뜻 a = a + 1;
-              print(a);
-            //  콘솔창에선 증가하고 있지만 랜더창에선 그대로임
-            //  재랜더링 되도록 다음 시간에 코드 짤 예정
+              setState(() {
+                //setState 선언을 해줘야 관련 데이터가 모두 재랜더링 됨!
+                a++;
+                print(a);
+
+              });
+
 
             },
           ),
@@ -51,16 +60,25 @@ class MyApp extends StatelessWidget {
 //class는 위젯(?함수?)로 복잡한 코드를 따로 관리해줌
 //아무 데나 만들어도 됨
 //extedns StatelessWidget는 Statele..에 있는 함수를 Class에 다 넣어준다는 의미
-class ProfileList extends StatelessWidget {
+//StatelessWidget에서 StatefulWidget으로 변경!!
+class ProfileList extends StatefulWidget {
   const ProfileList({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileList> createState() => _ProfileListState();
+}
+
+class _ProfileListState extends State<ProfileList> {
   //const와 ProfileList는 향후 배울 것
+  var name = ['전혁', '송용수', '김동욱',];
+  var like = [0, 0, 0];
 
   @override
   //여기서 override는 아래 함수 중 일부를 덮어 쓴다는 말
   Widget build(BuildContext context) {
     return ListView.builder(
       padding: EdgeInsets.all(10),
-      itemCount: 12,
+      itemCount: 3,
       //몇 번 반복해줄지
       itemBuilder: (context, i) {
         //꼭 parameter 2개 필요, i는 1씩 증가하는 정수
@@ -70,8 +88,17 @@ class ProfileList extends StatelessWidget {
         //alt+4(command+4)누르면 console창 뜸
         return ListTile(
           //슨생님은 ListTile을 이용함
-          leading: Icon(Icons.account_circle, size: 40, color: Colors.black,),
-          title: Text('홍길동 ' + i.toString()),
+          leading: Text(like[i].toString()),
+          title: Text(name[i]),
+        trailing: TextButton(
+          child: Text('답장'),
+          onPressed: (){
+            setState(() {
+              like[i]++;
+
+            });
+          },
+        ),
         //  int는 Text에 안 나와서 .toString() 붙여야 함
         );
       },
