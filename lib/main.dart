@@ -50,7 +50,10 @@ class _MyAppState extends State<MyApp> {
               showDialog(context: context, builder: (context){
                 //showDialog에는 context와 builder, return이 필요함
                 //하지만 context는 위젯의 족보로 위에 있는 위젯을 보여줌
-                return Dialog(child: DialogDesign(),);
+                return Dialog(
+                  child: DialogDesign(naming: a),
+                //  부모의 데이터를 자식 Widget에서 쓰기 위해 넣어줌
+                );
               });
             },
           ),
@@ -103,9 +106,20 @@ class _ProfileListState extends State<ProfileList> {
   }
 }
 
-class DialogDesign extends StatelessWidget {
-  const DialogDesign({Key? key}) : super(key: key);
+class DialogDesign extends StatefulWidget {
+  DialogDesign({Key? key, this.naming}) : super(key: key);
+  // 기존 Key? key 부분은 꼭 남겨두자. this.naming을 통해 부모에게서 정보 가져옴
+  // 중괄호 부분에 parameter를 설정할 수 있음(중괄호는 optional하게 두 개를 받는다는 의미? 하나만 넣어도 됨?)
+  // naming이란 parameter를 쓰겠습니다는 얘기, but 아래에 변수를 설정해둬야 함
+  // key에 대해서는 다음 시간에 설명
+  var naming;
 
+  @override
+  State<DialogDesign> createState() => _DialogDesignState();
+}
+
+class _DialogDesignState extends State<DialogDesign> {
+  //부모에게서 가져온 데이터를 여기서 이렇게 써야함
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -117,6 +131,7 @@ class DialogDesign extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Flexible(child: Text('Contact', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)), flex: 1, fit: FlexFit.tight,),
+          Flexible(child: Text('부모에게서 받은 숫자 ' + widget.naming.toString(), style: TextStyle(fontSize: 18, )), flex: 1, fit: FlexFit.tight,),
           Flexible(child: TextField(
             decoration: InputDecoration(
               border: OutlineInputBorder(),
@@ -130,8 +145,14 @@ class DialogDesign extends StatelessWidget {
               TextButton(onPressed: () {
                 Navigator.pop(context);
               //  팝업된 Dialog없애는 위젯인 것 같길래 써봤더니 이게 되네-
+              //  '현재 페이지 닫아주셈'과 같은 의미, 나중에 다시 나옴
               }, child: Text('Cancel', style: TextStyle(fontSize: 18),)),
-              TextButton(onPressed: () {}, child: Text('OK', style: TextStyle(fontSize: 18),)),
+              TextButton(onPressed: () {
+                setState(() {
+                  widget.naming++;
+
+                });
+              }, child: Text('OK', style: TextStyle(fontSize: 18),)),
             ],
           ), flex: 1, fit: FlexFit.tight,)
         ],
