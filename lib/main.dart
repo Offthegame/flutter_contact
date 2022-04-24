@@ -29,6 +29,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   //일단 const는 지워두자
+  var name = ['전혁', '송용수', '김동욱',];
   var a = 0;
   var total = 0;
 addOne(){
@@ -38,6 +39,14 @@ addOne(){
 }
   //이처럼 함수를 부모 class 밑에 '설치 > 전달 > 받고 > 정의 > 적용'
 
+  addName(txt) {
+  setState(() {
+    //하, setState 자꾸 까먹지 말자 ㅠㅠ 몇번째..?
+    name.add(txt);
+  });
+  }
+  
+  
   @override
   Widget build(BuildContext context) {
     //context는 CustomWidget을 만들 때마다 강제로 하나씩 생성
@@ -57,7 +66,7 @@ addOne(){
                 //showDialog에는 context와 builder, return이 필요함
                 //하지만 context는 위젯의 족보로 위에 있는 위젯을 보여줌
                 return Dialog(
-                  child: DialogDesign(naming: a, addOne: addOne,),
+                  child: DialogDesign(naming: a, addOne: addOne, addName: addName, name: name),
                 //  부모의 데이터를 자식 Widget에서 쓰기 위해 넣어줌
                 );
               });
@@ -66,7 +75,7 @@ addOne(){
           appBar: AppBar(
             title: Text(total.toString()),
           ),
-          body: ProfileList(),
+          body: ProfileList(name: name),
           bottomNavigationBar: BottomAppBar(),
         );
   //  Scaffold로 return한 거라 마지막에 ; 넣어줌
@@ -79,7 +88,8 @@ addOne(){
 //extedns StatelessWidget는 Statele..에 있는 함수를 Class에 다 넣어준다는 의미
 //StatelessWidget에서 StatefulWidget으로 변경!!
 class ProfileList extends StatefulWidget {
-  const ProfileList({Key? key}) : super(key: key);
+  ProfileList({Key? key, this.name}) : super(key: key);
+  var name;
 
   @override
   State<ProfileList> createState() => _ProfileListState();
@@ -87,15 +97,15 @@ class ProfileList extends StatefulWidget {
 
 class _ProfileListState extends State<ProfileList> {
 //   //const와 ProfileList는 향후 배울 것
-  var name = ['전혁', '송용수', '김동욱',];
 //
   @override
 //   //여기서 override는 아래 함수 중 일부를 덮어 쓴다는 말
   Widget build(BuildContext context) {
     return ListView.builder(
       padding: EdgeInsets.all(10),
-      itemCount: 3,
+      itemCount: widget.name.length,
 //       //몇 번 반복해줄지
+//    뭔진 모르겠지만 이거 list.length써 줄 때 ()이건 안 씀
       itemBuilder: (context, i) {
 //         //꼭 parameter 2개 필요, i는 1씩 증가하는 정수
 //         //함수를 할당함, 아래 함수를 반복해줌
@@ -105,7 +115,7 @@ class _ProfileListState extends State<ProfileList> {
         return ListTile(
 //           //슨생님은 ListTile을 이용함
           leading: Icon(Icons.account_circle, size: 40, color: Colors.black),
-          title: Text(name[i]),
+          title: Text(widget.name[i]),
 //
 //         //  int는 Text에 안 나와서 .toString() 붙여야 함
         );
@@ -115,19 +125,26 @@ class _ProfileListState extends State<ProfileList> {
 }
 
 class DialogDesign extends StatefulWidget {
-  DialogDesign({Key? key, this.naming, this.addOne}) : super(key: key);
+  DialogDesign({Key? key, this.naming, this.addOne, this.addName, this.name}) : super(key: key);
   // 기존 Key? key 부분은 꼭 남겨두자. this.naming을 통해 부모에게서 정보 가져옴
   // 중괄호 부분에 parameter를 설정할 수 있음(중괄호는 optional하게 두 개를 받는다는 의미? 하나만 넣어도 됨?)
   // naming이란 parameter를 쓰겠습니다는 얘기, but 아래에 변수를 설정해둬야 함
   // key에 대해서는 다음 시간에 설명
   var naming;
   var addOne;
+  var inputData = TextEditingController();
+  //TextEditingController() 안에 Input 데이터가 들어감
+  var addName;
+  var name;
+
   @override
   State<DialogDesign> createState() => _DialogDesignState();
 }
 
 class _DialogDesignState extends State<DialogDesign> {
   //부모에게서 가져온 데이터를 여기서 이렇게 써야함
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -139,11 +156,15 @@ class _DialogDesignState extends State<DialogDesign> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Flexible(child: Text('Contact', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)), flex: 1, fit: FlexFit.tight,),
-          Flexible(child: Text('부모에게서 받은 숫자 ' + widget.naming.toString(), style: TextStyle(fontSize: 18, )), flex: 1, fit: FlexFit.tight,),
           Flexible(child: TextField(
+            controller: widget.inputData,
+            //위치에 따라 widget.붙여야 하는 것 잊지말자!
+            //controller 대신 onChanged: (text) { widget.inputData = text }, 사용 가능
+            //onChange는 inputData가 많을 경우 사용
+            //하지만 우리는 list[]나 Map{}자료를 사용할 예정
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              labelText: 'Number',
+              labelText: '이름',
             ),
           ), flex: 1, fit: FlexFit.tight,),
           Flexible(
@@ -156,12 +177,10 @@ class _DialogDesignState extends State<DialogDesign> {
               //  '현재 페이지 닫아주셈'과 같은 의미, 나중에 다시 나옴
               }, child: Text('Cancel', style: TextStyle(fontSize: 18),)),
               TextButton(onPressed: () {
-                  widget.addOne();
-              //    희안하게 statefulWidget에서는 앞에 widget.을 붙여준다.
-                setState(() {
-                  //setState해주는거 까먹지 말자 ㅠ
-                  widget.naming++;
-                });
+                  widget.addName(widget.inputData.text.toString());
+              //    inputData List 안, text를 toString해서 보여주자!
+                  Navigator.pop(context);
+                  print(widget.name);
 
               }, child: Text('OK', style: TextStyle(fontSize: 18),)),
             ],
