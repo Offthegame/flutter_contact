@@ -164,7 +164,7 @@ class _DialogDesignState extends State<DialogDesign> {
             //하지만 우리는 list[]나 Map{}자료를 사용할 예정
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              labelText: '이름',
+              labelText: 'name',
             ),
           ), flex: 1, fit: FlexFit.tight,),
           Flexible(
@@ -216,3 +216,27 @@ class BottomAppBar extends StatelessWidget {
     );
   }
 }
+
+
+// Android Studio에서 가상기기를 만들어 플러터 앱에 띄움
+// 맥북의 경우 기본 에뮬레이터가 동봉돼 나옴, 그거 쓰면 됨
+
+// <사전 설정 : 이미 다 돼있는 경우도 있음>
+// Bios에서 Virtual 어쩌구 켜기 > "Windows 기능켜기"에서 Hyper-V, 하이퍼바이저  어쩌구 체크 해제
+// >Android Studio에서 Intel x86 Emulator ... 체크 > Apply
+
+// <안드로이드 가상기기 만들기>
+// Tools > AVD manager(Device manager로 바뀜!) > Create Virtual Device 누르기 > 기기 선택하기 (우린 Pixel 5)
+// > 시스템 이미지 고르기(안드로이드 소프트웨어 버전 고르는 듯 30 선택, 난 31)
+// > Chrome(web)대신 Refresh눌린 후 Open Android Emulator 누르면 폰이 나타남!
+
+// <iOS 기기 테스트의 경우>
+// 맥북 앱스토어에서 Xcode 설치 필요(10기가 넘음)
+// 런치패드에서 터미널 검색 > 아래 코드 입력
+// sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+// sudo xcodebuild -runFirstLaunch
+// sudo xcodebuild -license
+
+//차례로 터미널에 입력, 중간에 비번 입력하라고 하는데 맥북 비번 없으면 만들어야 함, 이후 동의까지 진행
+// Android Studio 상단 Device 선택 부분에 Open iOS Simulator 등장!
+// 만약 없다면 spotlight 검색 > simulator 검색 후 실행
