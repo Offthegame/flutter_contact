@@ -1,5 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_contact">
+
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <!--    manifest 코드 아래에 위 코드 두 줄을 넣음 -->
+    <!--  유저에게 어떤 권한을 받을 것인지 명시-->
+    <!--  다른 권한 요청이 필요한 경우우 fltter-permission-handler를 검색해보자  -->
+
    <application
         android:label="flutter_contact"
         android:name="${applicationName}"

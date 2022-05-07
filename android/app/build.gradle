@@ -1,4 +1,7 @@
 def localProperties = new Properties()
+// Properties가 빨간 글씨였는데 노란 글씨로 바뀌었다!
+// File > ProjectStructure > Project Setting > Modules > Module SDK에 Android Platform선택 후 Apply
+// 강의에서는 그냥 냅둬도 상관없다고 함, 실제 에뮬레이터는 잘 작동함을 알 수 있다.
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
     localPropertiesFile.withReader('UTF-8') { reader ->
@@ -8,8 +11,9 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw new FileNotFoundException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
+// 위 ProjectStructure를 수정하고도 빨간 글씨가 나타날 수 있음, GradleException을 FileNotFoundException으로 대체한다
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
@@ -27,6 +31,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     compileSdkVersion flutter.compileSdkVersion
+//    강의에서 compileSdkVersion을 31로 맞췄으나 글자면 그냥 진행해도 된다고 함
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+// permission handler 추가 완료
+// 패키지 설치와 더불어 gradle파일과 Manifest파일 세팅들이 끝나면 emul재시작 필요
 
 //void는 '아무 것도 하지 말아주세요' 인데 알 필요 없음
 //void main() {} 아래 다 지우고 새로 작성
@@ -29,6 +32,33 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   //일단 const는 지워두자
+  getPermission() async {
+    var status = await Permission.contacts.status;
+    if (status.isGranted) {
+      print('허락됨');
+    } else if (status.isDenied) {
+      print('거절됨');
+      Permission.contacts.request();
+    //  권한을 요청하는 팝업창 띄워 달라는 코드임
+      openAppSettings();
+    //  앱 설정화면 켜 달라는 코드
+    }
+  }
+  // 라이브러리 만든 사람이 위처럼 써라고 함
+  // Android 11버전, iOS에서 유저가 한 두번 이상 거절하면 다시 팝업 안 뜸
+  // 따라서 실제 어떤 권한이 필요한 순간에 권한을 요청하는 것이 필요함
+  // async await는 자바스크립트의 promise랑 유사, but Futures라고 부름
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   getPermission();
+  // //  화면 실행시 getPermission()이 보여지도록 함,
+  // //  하지만 요즘엔 이렇게 시작과 동시에 권한요청을 하지 않음
+  // }
+  // 화면 실행시 보여지는 함수, init만 입력하면 자동완성으로 initState가 뜸
+
   var name = ['전혁', '송용수', '김동욱',];
   var a = 0;
   var total = 0;
@@ -74,6 +104,9 @@ addOne(){
           ),
           appBar: AppBar(
             title: Text(total.toString()),
+            actions: [
+              IconButton(onPressed: (){ getPermission(); }, icon: Icon(Icons.contacts))
+            ],
           ),
           body: ProfileList(name: name),
           bottomNavigationBar: BottomAppBar(),
@@ -240,3 +273,40 @@ class BottomAppBar extends StatelessWidget {
 //차례로 터미널에 입력, 중간에 비번 입력하라고 하는데 맥북 비번 없으면 만들어야 함, 이후 동의까지 진행
 // Android Studio 상단 Device 선택 부분에 Open iOS Simulator 등장!
 // 만약 없다면 spotlight 검색 > simulator 검색 후 실행
+
+
+
+// <아이폰 권한 요청을 위한 설정: 맥북에서만 가능>
+// 프로젝트 켜 둔 상황에서 Terminal Open (Android Studio는 상단 View - Tool Windows - Terminal)
+
+// ****** 아이폰용 Setting ******
+
+// <m1 맥북의 경우 아래 코드들 입력>
+// cd ios
+// sudo arch -x86_64 gem install ffi
+// sudo arch -x86_64 gem install cocoapods
+
+// 위 코드를 입력하면 ios폴더에 Podfile이 생김(없으면 터미널에 pod init입력)
+// Podfile 최하단에 post_install do |installer| 어쩌구로 시작하는 부분 다 지우기
+// 아래 크드로 교체
+// post_install do |installer|
+  // installer.pods_project.targets.each do |target|
+    // flutter_additional_ios_build_settings(target)
+    // target.build_configurations.each do |config|
+      // config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+        // '$(inherited)',
+        // 'PERMISSION_CONTACTS=1',
+        // #추가할거 더 있으면 이 자리에
+      // ]
+    // end
+    // end
+// end
+
+// 다른 권한들 주고 싶으면 https://pub.dev/packages/permission_handler 여기 방문
+// PERMISSION_CAMERA=1 이렇게 쓰면 카메라 권한임
+
+// Info.plist파일 오픈해서 아래 코드를 적절한(?) 곳에 추가
+// <key>NSContactsUsageDescription</key>
+// <string>님 폰의 연락처 권한이 필요합니다 제발 주셈</string>
+
+// 다른 권한도 요청하고 있으면 Info.plist파일에 다른 권한도 추가 필요

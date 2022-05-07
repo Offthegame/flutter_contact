@@ -38,6 +38,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  permission_handler: ^8.3.0
+  # 위처럼 적고 전구의 pub get 누르면 설치 진행됨, 권한 요청하는 패키지 설치가 진행됨
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
