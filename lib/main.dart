@@ -264,8 +264,22 @@ class _DialogDesignState extends State<DialogDesign> {
           Flexible(child: TextField(
             controller: widget.phoneNumber,
                decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Phone Number',
+                 icon: Icon(Icons.phone),
+                 // icon 대신 prefixIcon, suffixIcon 파라미터도 있다고 함
+                 // ThemeData에 넣을 경우
+                 //   inputDecorationTheme: InputDecorationTheme( ...
+                 // 위와 같은 방식으로 넣어야 함
+                 border: OutlineInputBorder(), 
+                 labelText: 'Phone Number',
+                 enabledBorder: OutlineInputBorder(
+                   //OutlineInputBorder() 위젯은 상하좌우 테두리를 주고
+                   // UnderlineInputBorder() 위젯은 하단 테두리만 주고
+                   // InputBorder.none 위젯 쓰면 테두리를 없애줍니다.
+                   // 이 위젯들 안에서 border 두께, 색상 이런거 커스터마이징하면 됩니다.
+                   // 언제나 자동완성을 활용합시다.
+                   borderRadius: BorderRadius.circular(50),
+                   // borderSide: BorderSide.none 줄 없앰
+                 ),
             ),
           ), flex: 1, fit: FlexFit.tight,),
           Flexible(
