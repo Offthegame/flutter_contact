@@ -188,7 +188,8 @@ class _ProfileListState extends State<ProfileList> {
         return ListTile(
 //           //슨생님은 ListTile을 이용함
           leading: Icon(Icons.account_circle, size: 40, color: Colors.black),
-          title: Text(widget.name[i].givenName),
+          title: Text(widget.name[i].givenName ?? '이름 없음'),
+          // 이렇게 null 데이터가 있을 수 있는 부분에 ??로 대체할 수 있는 값 입력 가능!
           // name[i]를 그대로 두면 String이 아니라는 Error가 남,
           // 처음에 .FirstName이라고도 했는데 instance of 'Contracts'에 없는 규칙이었음
           // 패키지(라이브러리?) 사용법 확인이 필요한 부분
